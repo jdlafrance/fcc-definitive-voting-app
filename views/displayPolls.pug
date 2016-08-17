@@ -17,7 +17,7 @@ html
       div(class='col-xs-4')
         p.inv #{name}
       div(class='col-xs-4')
-        a(class='btn btn-large btn-primary', href='../auth/facebook') Sign in with Facebook
+        a(class='btn btn-large btn-primary', href=process.env.APP_URL + '/auth/facebook') Sign in with Facebook
       
       
     div.container

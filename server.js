@@ -31,7 +31,7 @@ db.connection.once('open', function(){
     title: String,
     choices: Object,
     voters: Array
-    }, {collection: 'attempt'})
+    }, {collection: 'polls'})
   
 
     var Data = db.model('data', dataSchema)
@@ -80,6 +80,22 @@ app.get('/5*', function(req, res){
             }
         }
     })
+});
+
+
+app.get('/mypolls', function(req, res){
+
+   Data.find({user:req.user.id}, function(err, results){
+       var value = [];
+       var ids = [];
+       for ( var i = 0; i < results.length; i++){
+           value.push(i.title);
+           ids.push(i._id);
+       }
+       
+       
+       res.render('welcome-logged.pug', {title: 'VotingApp', name: req.user.name, values: values, display: ids});
+   })
 });
 
 app.post('/save', function(req, res){
@@ -144,14 +160,6 @@ Data.findOne({_id:ObjectId(str)}, function(err, result){
 	   })
     }
 })
-	    
-	app.get('/mypolls', function(req, res){
-	    Data.find({user: req.user.id}, function(err, datas){
-	        if (err) throw err;
-            
-        	res.render('welcome-logged.pug', {title: 'VotingApp', name: req.user.name, values: values, display: ids}) 
-        })
-	    })
 	
 });
 });
