@@ -1,0 +1,29 @@
+
+
+html
+  head
+    title= title
+    link(href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css', rel='stylesheet')
+    link(rel='stylesheet', href='/css/welcome.css', type='text/css')
+    link(rel="stylesheet", href="../node_modules/font-awesome/css/font-awesome.min.css")
+    script(src='https://code.jquery.com/jquery-3.1.0.min.js', charset='utf-8')
+    script(type="text/javascript" src="/common/ajax-functions.js")
+    
+  body
+    div.container-fluid.menubar
+      div(class='col-xs-4')
+        a#appTitle(style='font-size: 24px; font-weight: bold', href='/') VotingApp
+      div(class='col-xs-4')
+        p.inv= name
+      div(class='col-xs-4 signup')
+        a(class='btn btn-large btn-primary', href='/auth/facebook') Sign in with facebook
+    
+    div.container
+      div.welcome Welcome! Please log in to create polls or consult and vote in the polls available below.
+      div.contact This web app was built by jd lafrance
+      
+      div.list-group
+      #values
+      #display
+        each val, index in values
+              a(href=display[index], class='list-group-item') #{val}

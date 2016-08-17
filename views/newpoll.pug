@@ -1,0 +1,33 @@
+html
+  head
+    title= title
+    link(href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css', rel='stylesheet')
+    link(rel='stylesheet', href='/css/welcome.css', type='text/css')
+    link(rel='stylesheet', href='/css/newpoll.css', type='text/css')
+    script(src='https://code.jquery.com/jquery-3.1.0.min.js', charset='utf-8')
+    script(type="text/javascript" src="/common/ajax-functions.js")
+    
+  body
+    div.container-fluid.menubar
+      div(class='col-xs-4')
+        a#appTitle(style='font-size: 24px; font-weight: bold', href='/') VotingApp
+      div(class='col-xs-4')
+        p.inv(style='font-size: 24px')= name
+      div(class='col-xs-4 logout')
+        div.col-xs-3
+          a#myPolls(href='/mypolls') My Polls
+        div.col-xs-3
+          a#newPoll(href='/newpoll') New Poll
+        div.col-xs-2
+          a.signup.btn.btn-large.btn-primary(href='/logout') log out
+    
+  
+    div.container
+        p#title Create a new poll
+        div.newpoll
+                form(method='POST', action='/save', role='form')
+                  label(for='title', style='font-size: 16pt') Give your poll a title
+                  input.form-control#title(type='text', name='title')
+                  label.sub(for='options') Enter options separated by a comma
+                  textarea.form-control#options(type='text', rows=5, name='options')
+                  input.btn.btn-large.btn-primary#submit(type='submit')

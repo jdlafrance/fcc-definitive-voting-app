@@ -1,0 +1,23 @@
+#options{
+  width: 500px;
+  height: 200px;
+  margin-top: 50px;
+}
+
+#title{
+    width: 500px;
+}
+
+#submit{
+  margin-top: 50px;
+}
+
+#title{
+  font-size: 24pt;
+  font-family: 'Comic Sans';
+}
+.sub{
+  margin-top: 20px;
+  font-size: 16pt;
+  font-family: 'Comic Sans';
+}
