@@ -82,19 +82,53 @@ app.get('/5*', function(req, res){
     })
 });
 
+app.get('/mypolls/*', function(req, res){
+    
+    //console.log(req.url)
+   var str = req.url.substring(9);
+   Data.findOne({_id: ObjectId(str)}, function(err, result){
+       if (err) throw err;
+       var keys = [],
+       votes = [];
+       for (var key in result.choices){
+               keys.push(key);
+              votes.push(result.choices[key]);
+           }
+        if (result.voters.indexOf(req.headers['x-forwarded-for']) > -1){
+        var message = 'Thanks for your vote'
+        res.render('displayPolls-logged-own.pug', {message: message, name:req.user.name, title:result.title, choices: keys, votes: votes, address: str})
+   } else {
+        message = 'Please vote'
+       res.render('displayPolls-logged-own.pug', {message: message, name:req.user.name, title:result.title, choices: keys, votes: votes, address: str})
+   }
+      
+           
+   })
+});
+
+app.get('/delete/*', function(req, res){
+    var str = req.url.substring(8);
+    
+    Data.findOne({_id: str}).remove().exec(function(){
+        res.redirect('/mypolls')
+    })
+})
+
 
 app.get('/mypolls', function(req, res){
 
-   Data.find({user:req.user.id}, function(err, results){
+   Data.find({user: req.user.id}, function(err, results){
+
+       if (err) throw err;
        var value = [];
        var ids = [];
-       for ( var i = 0; i < results.length; i++){
-           value.push(i.title);
-           ids.push(i._id);
-       }
+        results.map(function(val){
+            value.push(val.title);
+            ids.push(val._id)
+        })
        
        
-       res.render('welcome-logged.pug', {title: 'VotingApp', name: req.user.name, values: values, display: ids});
+       res.render('mypolls.pug', {title: 'VotingApp', name: req.user.name, values: values, display: ids});
    })
 });
 

@@ -1,0 +1,70 @@
+html
+  head
+    title= title
+    link(href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css', rel='stylesheet')
+    link(href="/css/display.css" rel="stylesheet" type="text/css")
+    link(href="/css/welcome.css" rel="stylesheet" type="text/css")
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.bundle.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.bundle.min.js', type='text/javascript')
+    script(src='https://code.jquery.com/jquery-3.1.0.min.js', charset='utf-8')
+  body
+   body
+    div.container-fluid.menubar
+      div(class='col-xs-4')
+        a#appTitle(style='font-size: 24px; font-weight: bold', href='/') VotingApp
+      div(class='col-xs-4')
+        p.inv #{name}
+      div(class='col-xs-4')
+        div.col-xs-3
+          a#myPolls(href='/mypolls') My Polls
+        div.col-xs-3
+          a#newPoll(href='/newpoll') New Poll
+        div.col-xs-2
+          a.signup.btn.btn-large.btn-primary(href='/logout') log out
+      
+      
+    div.container
+      div.wel= message
+      h3= title
+  
+      #choices
+        div.dropdown.col-xs-6
+          button.dropbtn Options
+          div.dropdown-content
+            each val in choices
+              a(href='/vote/' + address + '/' + val) #{val}
+        div.graph.col-xs-6
+          canvas#myChart
+          script.
+            var ctx = $('#myChart')
+            var myChart = new Chart(ctx, {
+              type: 'pie',
+              data: {
+                labels: "#{choices}".split(','),
+                datasets: [{
+                  label: '# of Votes',
+                  data: "#{votes}".split(','),
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                  'rgba(255,99,132,1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+                }]
+              }
+            })
+          div.delete
+            a.delete.btn.btn-large.btn-danger(href='/delete/'+address) Delete this poll
