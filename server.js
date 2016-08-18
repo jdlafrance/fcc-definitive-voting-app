@@ -27,7 +27,7 @@ db.connection.on('error', function(){
 
 
 
-var open = db.connection.on('open', function(){
+db.connection.on('open', function(){
     var dataSchema = new Schema ({
     user: Number,
     title: String,
@@ -51,7 +51,7 @@ var open = db.connection.on('open', function(){
      
         })
 
-    routes(app, passport, values, ids, session);
+    routes(app, passport, values, ids, session, Data);
     
     
 
@@ -110,29 +110,26 @@ app.get('/mypolls/*', function(req, res){
    })
 });
 
-app.rest('/delete/*', function(req, res){
-    var str = req.url.substring(8);
-    
-    Data.findByIdAndRemove(str, function(err, results){
-        if (err) throw err;
-        res.redirect('/mypolls')
-    })
 
-})
+
+   
+
 
 
 app.get('/mypolls', function(req, res){
+    var value = [];
+    var ids = [];
+    
 
    Data.find({user: req.user.id}, function(err, results){
 
        if (err) throw err;
-       var value = [];
-       var ids = [];
+
         results.map(function(val){
             value.push(val.title);
             ids.push(val._id)
         })
-       console.log(values)
+
        
        res.render('mypolls.pug', {title: 'VotingApp', name: req.user.name, values: values, display: ids});
    })
